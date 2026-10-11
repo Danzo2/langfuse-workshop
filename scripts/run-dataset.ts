@@ -21,8 +21,9 @@ import { randomUUID } from "node:crypto";
 import { LangfuseClient } from "@langfuse/client";
 import OpenAI from "openai";
 import type { ChatMessage } from "../src/shared/types";
-import { env } from "../src/server/env";
+import { env, isOpenAIConfigured } from "../src/server/env";
 import { runSupportConversation } from "../src/server/support-agent";
+import { createOpenAIClient } from "../src/server/openai-client";
 
 const langfuseSpanProcessor = new LangfuseSpanProcessor();
 const sdk = new NodeSDK({ spanProcessors: [langfuseSpanProcessor] });
@@ -121,7 +122,7 @@ function parseCorrectnessScore(value: unknown): boolean {
 }
 
 async function scoreCorrectness(answer: string, idealAnswer: string) {
-  const openai = new OpenAI({ apiKey: env.openaiApiKey });
+  const openai = createOpenAIClient();
   const response = await openai.chat.completions.create({
     model: env.openaiModel,
     response_format: { type: "json_object" },
@@ -174,8 +175,10 @@ async function main() {
     throw new Error("Langfuse credentials are required to run dataset experiments.");
   }
 
-  if (!env.openaiApiKey) {
-    throw new Error("OPENAI_API_KEY is required to run the agent and the correctness judge.");
+  if (!isOpenAIConfigured()) {
+    throw new Error(
+      "OPENAI_API_KEY or AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT is required to run the agent and the correctness judge."
+    );
   }
 
   // --- 5. Pull the hosted dataset by DATASET_NAME from .env.
