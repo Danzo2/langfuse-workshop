@@ -44,9 +44,9 @@ If your project already has a default evaluator model, keep it and continue to S
 
 1. In Langfuse, open Project Settings → LLM Connections.
 2. Click Add new LLM Connection.
-3. Choose OpenAI, name the connection, and paste your OpenAI API key into the secret field.
+3. Choose either **Azure OpenAI** or **OpenAI**, name the connection, and enter your credentials (for Azure OpenAI: your endpoint, API key, and deployment name).
 4. Save the connection.
-5. No extra action after saving the connection — the default evaluation model is set during evaluator creation. When the wizard asks you to pick a model, choose the OpenAI connection and a structured-output-capable model such as `openai / gpt-4.1`.
+5. No extra action after saving the connection — the default evaluation model is set during evaluator creation. When the wizard asks you to pick a model, choose your connection and a structured-output-capable model such as `gpt-4.1` or your configured deployment.
 
    ![Choose the project default evaluation model in the Set up evaluator wizard.](../images/monitoring/default-evaluation-model.png)
 

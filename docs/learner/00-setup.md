@@ -58,10 +58,25 @@ npx skills add langfuse/skills --skill "langfuse"
 cp .env.example .env
 ```
 
-Fill in:
+Fill in either your Azure OpenAI credentials (recommended if using Azure) or your standard OpenAI API key:
+
+**If using Azure OpenAI:**
+
+```bash
+AZURE_OPENAI_API_KEY="your-azure-api-key"
+AZURE_OPENAI_ENDPOINT="https://<resource-name>.openai.azure.com/"
+AZURE_OPENAI_DEPLOYMENT="gpt-4.1-2025-04-14"
+AZURE_OPENAI_API_VERSION="2024-10-21"
+LANGFUSE_PUBLIC_KEY=pk-lf-...
+LANGFUSE_SECRET_KEY=sk-lf-...
+LANGFUSE_BASE_URL=https://cloud.langfuse.com
+```
+
+**If using standard OpenAI:**
 
 ```bash
 OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4.1-2025-04-14
 LANGFUSE_PUBLIC_KEY=pk-lf-...
 LANGFUSE_SECRET_KEY=sk-lf-...
 LANGFUSE_BASE_URL=https://cloud.langfuse.com
@@ -69,7 +84,7 @@ LANGFUSE_BASE_URL=https://cloud.langfuse.com
 
 Leave the rest of the defaults as they are.
 
-The workshop app always loads this repository's `.env` file for the server and helper scripts. If you have `LANGFUSE_*`, `OPENAI_*`, or `DATASET_NAME` values exported in your shell from another project, they will not override this file. To change the workshop configuration, edit `.env`.
+The workshop app always loads this repository's `.env` file for the server and helper scripts. If you have `LANGFUSE_*`, `AZURE_OPENAI_*`, `OPENAI_*`, or `DATASET_NAME` values exported in your shell from another project, they will not override this file. To change the workshop configuration, edit `.env`.
 
 Keep these values in your local `.env` only. Do not paste real API keys into shared workshop notes, transcripts, screenshots, or chat messages.
 
