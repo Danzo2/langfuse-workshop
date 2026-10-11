@@ -3,6 +3,7 @@ import type { ChatMessage, ChatRequest, ChatResponse } from "../shared/types";
 import { env } from "./env";
 import { getSupportContext } from "./support-data";
 import { TOOL_DEFINITIONS, executeTool } from "./tools";
+import { createOpenAIClient } from "./openai-client";
 
 export const SYSTEM_PROMPT = `You are Dad IT Support Agent.
 You are talking directly to Dad. He opened this chat himself to get help with his iPhone.
@@ -50,7 +51,7 @@ function parseToolArguments(argumentsText: string) {
 
 export async function runSupportConversation(request: ChatRequest): Promise<ChatResponse> {
   const context = getSupportContext();
-  const openai = new OpenAI({ apiKey: env.openaiApiKey });
+  const openai = createOpenAIClient();
 
   const transcript: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: SYSTEM_PROMPT },
