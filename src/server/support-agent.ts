@@ -6,6 +6,7 @@ import type { ChatMessage, ChatRequest, ChatResponse } from "../shared/types";
 import { env } from "./env";
 import { getSupportContext } from "./support-data";
 import { TOOL_DEFINITIONS, executeTool } from "./tools";
+import { createOpenAIClient } from "./openai-client";
 
 // Local fallback used when Langfuse isn't reachable or the prompt
 // isn't published yet. scripts/publish-prompt.ts pushes this same
@@ -76,7 +77,7 @@ async function runSupportConversationInner(request: ChatRequest): Promise<ChatRe
     },
     async () => {
       const openai = observeOpenAI(
-        new OpenAI({ apiKey: env.openaiApiKey }),
+        createOpenAIClient(),
         langfusePrompt ? { langfusePrompt } : undefined
       );
 
