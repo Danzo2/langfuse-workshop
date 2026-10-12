@@ -5,6 +5,7 @@ import type { ChatMessage, ChatRequest, ChatResponse } from "../shared/types";
 import { env } from "./env";
 import { getSupportContext } from "./support-data";
 import { TOOL_DEFINITIONS, executeTool } from "./tools";
+import { createOpenAIClient } from "./openai-client";
 
 export const SYSTEM_PROMPT = `You are Dad IT Support Agent.
 You are talking directly to Dad. He opened this chat himself to get help with his iPhone.
@@ -62,7 +63,7 @@ async function runSupportConversationInner(request: ChatRequest): Promise<ChatRe
       tags: ["langfuse-workshop", "dad-it-support"]
     },
     async () => {
-      const openai = observeOpenAI(new OpenAI({ apiKey: env.openaiApiKey }));
+      const openai = observeOpenAI(createOpenAIClient());
 
       const transcript: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
         { role: "system", content: SYSTEM_PROMPT },
