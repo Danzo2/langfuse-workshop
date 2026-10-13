@@ -22,7 +22,7 @@ An older version fails in a way that is easy to misread. Vite's platform-specifi
 Clone the workshop repository, enter it, then check out the setup checkpoint for this chapter:
 
 ```bash
-git clone https://github.com/langfuse/langfuse-workshop.git
+git clone https://github.com/Danzo2/langfuse-workshop.git
 cd langfuse-workshop
 git checkout checkpoint/00-setup
 ```
@@ -31,14 +31,17 @@ This checkpoint intentionally contains the same untraced base app as `checkpoint
 
 ## Step 1 — Get the API keys
 
-1. **OpenAI** — [platform.openai.com](https://platform.openai.com) → API Keys → create one. Copy the `sk-...` value; you will paste it into `.env` in Step 3.
-2. **Langfuse** — sign up at [langfuse.com](https://langfuse.com) on the **EU region**, create a project, and copy the public + secret keys from **Settings → API Keys**. You will paste those into `.env` in Step 3 as well.
+1. **Azure OpenAI (Arterial Corporate Setup)** — Get your Azure OpenAI API key from the team. The shared endpoint is `https://openai-arterial.openai.azure.com/` and the deployment is `gpt-5.1`. You will paste your API key into `.env` in Step 3.
+2. **Langfuse** — Log in to Arterial's Langfuse US instance at **[https://us.cloud.langfuse.com](https://us.cloud.langfuse.com)**.
+   - Click the organization dropdown and choose **New Project**.
+   - Name the project: `[your name] langfuse workshop` (for example, `Jane Doe langfuse workshop`).
+   - Copy the public + secret keys from **Settings → API Keys**. You will paste those into `.env` in Step 3.
 
 ## Step 2 — Install the Langfuse skill and CLI
 
 Later modules drive Langfuse through a coding agent, which needs the `langfuse` skill and the Langfuse CLI.
 
-Paste this into your coding agent to install both:
+Paste this into your coding agent (Antigravity, Cursor, etc.) to install both:
 
 > "Please install the `langfuse` skill from `https://github.com/langfuse/skills/tree/main/skills/langfuse`, and install the Langfuse CLI with `npm install -g langfuse-cli`."
 
@@ -46,11 +49,18 @@ Prefer to install them yourself:
 
 ```bash
 # Langfuse CLI
-npm install -g langfuse-cli
+npm install -g --force langfuse-cli
 
 # Langfuse Skill:
-npx skills add langfuse/skills --skill "langfuse"
+npx -y skills add langfuse/skills --skill "langfuse" -y
 ```
+
+> [!IMPORTANT]
+> **Protect `.agents/` across checkpoint checkouts:**
+> Add the skill directory to your local git exclusions so Git doesn't wipe it when switching checkpoint tags:
+> ```bash
+> printf "\n.agents/\nskills-lock.json\n" >> .git/info/exclude
+> ```
 
 ## Step 3 — Configure `.env`
 
@@ -58,28 +68,28 @@ npx skills add langfuse/skills --skill "langfuse"
 cp .env.example .env
 ```
 
-Fill in either your Azure OpenAI credentials (recommended if using Azure) or your standard OpenAI API key:
-
-**If using Azure OpenAI:**
+Fill in your Azure OpenAI API key and Langfuse keys in `.env`:
 
 ```bash
+# Azure OpenAI Configuration (Arterial Corporate Setup)
 AZURE_OPENAI_API_KEY="your-azure-api-key"
-AZURE_OPENAI_ENDPOINT="https://<resource-name>.openai.azure.com/"
-AZURE_OPENAI_DEPLOYMENT="gpt-4.1-2025-04-14"
+AZURE_OPENAI_ENDPOINT="https://openai-arterial.openai.azure.com/"
+AZURE_OPENAI_DEPLOYMENT="gpt-5.1"
 AZURE_OPENAI_API_VERSION="2024-10-21"
+
+# Standard OpenAI (Optional fallback, leave blank if using Azure)
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-5.1
+
+# Langfuse Configuration
 LANGFUSE_PUBLIC_KEY=pk-lf-...
 LANGFUSE_SECRET_KEY=sk-lf-...
-LANGFUSE_BASE_URL=https://cloud.langfuse.com
-```
+LANGFUSE_BASE_URL=https://us.cloud.langfuse.com
+LANGFUSE_PROMPT_NAME=dad-it-support-agent
+LANGFUSE_PROMPT_LABEL=production
 
-**If using standard OpenAI:**
-
-```bash
-OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4.1-2025-04-14
-LANGFUSE_PUBLIC_KEY=pk-lf-...
-LANGFUSE_SECRET_KEY=sk-lf-...
-LANGFUSE_BASE_URL=https://cloud.langfuse.com
+# Workshop Dataset
+DATASET_NAME=dad-it-support-workshop
 ```
 
 Leave the rest of the defaults as they are.

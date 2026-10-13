@@ -49,7 +49,7 @@ When you go back to your own codebase, do this in order:
    ```dotenv
    LANGFUSE_PUBLIC_KEY=pk-lf-...
    LANGFUSE_SECRET_KEY=sk-lf-...
-   LANGFUSE_BASE_URL=https://cloud.langfuse.com
+   LANGFUSE_BASE_URL=https://us.cloud.langfuse.com
    ```
 
    Then run the CLI from a shell that has loaded that file:
