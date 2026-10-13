@@ -94,7 +94,6 @@ Open `.env` and fill in your keys. The corporate Azure endpoint and deployment n
 AZURE_OPENAI_API_KEY=your-azure-openai-api-key-here
 AZURE_OPENAI_ENDPOINT=https://openai-arterial.openai.azure.com/
 AZURE_OPENAI_DEPLOYMENT=gpt-5.1
-AZURE_OPENAI_API_VERSION=2024-10-21
 
 # Standard OpenAI (Leave empty)
 OPENAI_API_KEY=
