@@ -42,13 +42,17 @@ The first monitor in this chapter uses an LLM-as-a-judge template. Langfuse runs
 
 If your project already has a default evaluator model, keep it and continue to Step 1.
 
-1. In Langfuse, open Project Settings → LLM Connections.
-2. Click Add new LLM Connection.
-3. Choose either **Azure OpenAI** or **OpenAI**, name the connection, and enter your credentials (for Azure OpenAI: your endpoint, API key, and deployment name).
-4. Save the connection.
-5. No extra action after saving the connection — the default evaluation model is set during evaluator creation. When the wizard asks you to pick a model, choose your connection and a structured-output-capable model such as `gpt-4.1` or your configured deployment.
-
-   ![Choose the project default evaluation model in the Set up evaluator wizard.](../images/monitoring/default-evaluation-model.png)
+1. In Langfuse, open **Settings → LLM Connections**.
+2. Click **Add new LLM Connection**.
+3. Choose **azure** as the LLM adapter and fill in the details:
+   - **LLM adapter**: `azure`
+   - **Provider name**: `azure-openai`
+   - **API Key**: Your Azure OpenAI API key (from `.env`)
+   - **API Base URL**: `https://openai-arterial.openai.azure.com/openai/deployments`
+     > ⚠️ **Important:** The URL must end with `/openai/deployments` (not just the root domain). Leaving this off causes a 404 error.
+   - **Custom models**: Type `gpt-5.1` and press **Enter** to add the tag.
+4. Click **Create connection**.
+5. When creating evaluators in later steps, choose this connection and `gpt-5.1` as your evaluator model.
 
 Keep the API key in the Langfuse secret field only. Do not paste it into workshop transcripts or shared notes.
 

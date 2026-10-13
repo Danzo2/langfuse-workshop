@@ -100,6 +100,10 @@ Things to look for:
 - Which items regressed (the part that makes evaluation feel useful).
 - Whether the prompt change shifted scope (more refusals? more confident answers? more steps per response?).
 
+> [!TIP]
+> **Why your top-level average might look identical (e.g. `Ø 0.71 vs Ø 0.71`):**  
+> Look directly below the score header for the indicator (e.g. `↗1 ↘1`). In a 14-item dataset, if one item improves (+1) while another regresses (-1), the net passing count remains 10/14 (0.71). The aggregate score looks unchanged, but individual behaviors shifted — this trade-off visibility is exactly why experiment evaluation is valuable.
+
 ## How to verify you are done
 
 - Two runs appear under the dataset, linked to different prompt versions.
