@@ -75,7 +75,6 @@ Fill in your Azure OpenAI API key and Langfuse keys in `.env`:
 AZURE_OPENAI_API_KEY="your-azure-api-key"
 AZURE_OPENAI_ENDPOINT="https://openai-arterial.openai.azure.com/"
 AZURE_OPENAI_DEPLOYMENT="gpt-5.1"
-AZURE_OPENAI_API_VERSION="2024-10-21"
 
 # Standard OpenAI (Optional fallback, leave blank if using Azure)
 OPENAI_API_KEY=
