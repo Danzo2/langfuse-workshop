@@ -73,11 +73,13 @@ async function getPrompt() {
 }
 ```
 
-**Use it in `runSupportConversation`** — fetch, then fall back to the local constant if the fetch returned null:
+**Use it inside `runSupportConversationInner`** — fetch at request time so prompt updates in Langfuse take effect dynamically on incoming turns:
 
 ```ts
-const langfusePrompt = await getPrompt();
-const systemPrompt = langfusePrompt?.prompt ?? SYSTEM_PROMPT;
+async function runSupportConversationInner(request: ChatRequest): Promise<ChatResponse> {
+  const context = getSupportContext();
+  const langfusePrompt = await getPrompt();
+  const systemPrompt = langfusePrompt?.prompt ?? SYSTEM_PROMPT;
 ```
 
 **Send `systemPrompt` as the system message.** Find this line in the transcript a few lines below:
@@ -98,14 +100,14 @@ Without this change the model keeps receiving the local constant — the Prompt 
 
 ```ts
 const openai = observeOpenAI(
-  new OpenAI({ apiKey: env.openaiApiKey }),
+  createOpenAIClient(),
   langfusePrompt ? { langfusePrompt } : undefined
 );
 ```
 
 Three things to notice:
 
-- The `observeOpenAI(new OpenAI(...))` call itself didn't change — same inline wrap from step 02. We just added a conditional second argument carrying the `langfusePrompt`.
+- The `observeOpenAI(createOpenAIClient(), ...)` call wraps our provider factory — keeping it compatible with both Azure OpenAI and standard OpenAI. We just added a conditional second argument carrying the `langfusePrompt`.
 - The local `SYSTEM_PROMPT` constant stays in the file as the fallback. If Langfuse is misconfigured or the prompt isn't published yet, the chat keeps working — it just won't carry the Prompt badge on that turn.
 - Passing `langfusePrompt` into `observeOpenAI` is what makes every generation under that client carry the **Prompt** badge linking back to the exact published version.
 
