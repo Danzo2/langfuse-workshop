@@ -50,7 +50,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-git archive "$SOURCE_REF" docs README.md AGENTS.md | tar -x -C "$STAGE"
+git archive "$SOURCE_REF" docs README.md AGENTS.md AZURE_WORKSHOP_GUIDE.md .env.example | tar -x -C "$STAGE"
 
 for tag in "${TAGS[@]}"; do
   if ! git rev-parse --verify "refs/tags/$tag" >/dev/null 2>&1; then
@@ -65,19 +65,21 @@ for tag in "${TAGS[@]}"; do
   cp -a "$STAGE/docs" .
   cp "$STAGE/README.md" README.md
   cp "$STAGE/AGENTS.md" AGENTS.md
+  cp "$STAGE/AZURE_WORKSHOP_GUIDE.md" AZURE_WORKSHOP_GUIDE.md
+  cp "$STAGE/.env.example" .env.example
 
-  git add -A docs README.md AGENTS.md
+  git add -A docs README.md AGENTS.md AZURE_WORKSHOP_GUIDE.md .env.example
   if git diff --cached --quiet; then
     echo "    already in sync with $SOURCE_REF"
     continue
   fi
 
   git commit -q -m "$(cat <<EOF
-Refresh checkpoint docs to latest workshop docs
+Refresh checkpoint docs and Azure setup to latest workshop state
 
-Replaces docs/, README.md, and AGENTS.md with the current tree from
-${SOURCE_REF} so this checkpoint's instructions and agent notes match
-main. App code at this checkpoint is unchanged.
+Replaces docs/, README.md, AGENTS.md, AZURE_WORKSHOP_GUIDE.md, and .env.example
+with the current tree from ${SOURCE_REF} so this checkpoint's instructions and
+configuration match main. App code at this checkpoint is unchanged.
 EOF
 )"
 
