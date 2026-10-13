@@ -84,16 +84,16 @@ import { observeOpenAI } from "@langfuse/openai";
 Then **wrap the OpenAI client where you create it**. Find this line in `runSupportConversation`:
 
 ```ts
-const openai = new OpenAI({ apiKey: env.openaiApiKey });
+const openai = createOpenAIClient();
 ```
 
 and change it to:
 
 ```ts
-const openai = observeOpenAI(new OpenAI({ apiKey: env.openaiApiKey }));
+const openai = observeOpenAI(createOpenAIClient());
 ```
 
-That's the entire diff. No factory function, no separate raw client — `observeOpenAI` wraps the OpenAI client inline at the call site, and `openai.chat.completions.create(...)` below it now emits a trace for every call.
+That's the entire diff. `createOpenAIClient()` initializes the client using your Azure OpenAI or standard OpenAI credentials from `.env`, and `observeOpenAI` wraps it inline so `openai.chat.completions.create(...)` below it emits a trace for every call.
 
 
 **Verify:** `npm run dev`, ask one question, refresh Langfuse — you should see one generation per OpenAI call with prompt, response, tokens, and latency. Each generation is still its own top-level trace; we fix that next.
