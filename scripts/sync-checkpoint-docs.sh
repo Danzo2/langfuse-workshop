@@ -62,13 +62,12 @@ for tag in "${TAGS[@]}"; do
   git checkout -q --detach "refs/tags/$tag"
 
   rm -rf docs
-  rm -f AZURE_WORKSHOP_GUIDE.md
   cp -a "$STAGE/docs" .
   cp "$STAGE/README.md" README.md
   cp "$STAGE/AGENTS.md" AGENTS.md
   cp "$STAGE/.env.example" .env.example
 
-  git add -A docs README.md AGENTS.md .env.example AZURE_WORKSHOP_GUIDE.md
+  git add -A docs README.md AGENTS.md .env.example
   if git diff --cached --quiet; then
     echo "    already in sync with $SOURCE_REF"
     continue
