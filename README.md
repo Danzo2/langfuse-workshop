@@ -9,9 +9,7 @@ You can complete the workshop on your own from the learner lessons, or use the i
 > ⚠️ Use **Langfuse Cloud** so you have the latest features this workshop describes. Self-hosted instances may be on an older version and will not match the lessons.
 
 > [!NOTE]
-> **Arterial Azure OpenAI Edition**: This repository is pre-configured for Arterial team members using Azure OpenAI (`gpt-5.1`) and Langfuse US Cloud (`https://us.cloud.langfuse.com`).
-> - **Quickstart Companion Guide**: See [`AZURE_WORKSHOP_GUIDE.md`](./AZURE_WORKSHOP_GUIDE.md) for copy-paste assistant prompts, step-by-step guidance, and Azure gotchas.
-> - **Learner Lessons**: Follow the lessons in [`docs/learner/`](./docs/learner/) (all instructions and `.env.example` are pre-tailored for Azure).
+> **Arterial Azure OpenAI Edition**: This repository is pre-configured for Arterial team members using Azure OpenAI (`gpt-5.1`) and Langfuse US Cloud (`https://us.cloud.langfuse.com`). Follow the learner lessons in [`docs/learner/`](./docs/learner/) to get started (all instructions and `.env.example` are pre-tailored for Azure).
 
 ## For learners
 
