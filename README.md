@@ -41,7 +41,7 @@ The sample app is a small web chat where Dad opens the chat to get iPhone help. 
 
 ![The Dad IT Support Agent sample app: Specs greeting Dad, suggestion chips, and the iPhone side panel.](./docs/images/sample_app.png)
 
-`main` contains the complete reference app and current workshop docs. Use it to inspect the finished implementation or compare your work against the end state. The exercises themselves start from checkpoint tags.
+`main` contains the clean, untraced starting app and current workshop docs, ready for you to build on. If you ever want to inspect the finished reference implementation, check out the [`reference-solution`](https://github.com/Danzo2/langfuse-workshop/tree/reference-solution) branch. The exercises can also be accessed via checkpoint tags.
 
 ## Modules
 
@@ -59,7 +59,7 @@ The sample app is a small web chat where Dad opens the chat to get iPhone help. 
 
 ## How to work through it
 
-`main` is the complete reference implementation. For hands-on work, check out the checkpoint named in the lesson you are starting, make the missing changes, and verify the result before moving on.
+`main` starts at the base untraced application state. You can either stay on `main` and build sequentially through the chapters, or check out the canonical `checkpoint/*` tags for each lesson. If you ever get stuck or want to compare, check out the `reference-solution` branch.
 
 `checkpoint/00-setup` and `checkpoint/01-base-app` intentionally contain the same untraced base app. Setup uses that state to validate keys, dependencies, and ports; Base App uses it for orientation. Tracing starts in `02-tracing`.
 
